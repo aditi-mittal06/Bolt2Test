@@ -12,6 +12,7 @@ export class AuthService {
     // In a real application, you would make an API call here
     if (username === 'admin' && password === 'password') {
       localStorage.setItem('isLoggedIn', 'true');
+      this.router.navigate(['/customers']);
       return true;
     }
     return false;
