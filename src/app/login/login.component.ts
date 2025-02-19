@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { ERROR_MESSAGES } from '../constants/app.constants';
 
 @Component({
   selector: 'app-login',
@@ -64,7 +65,7 @@ export class LoginComponent {
     if (this.authService.login(this.username, this.password)) {
       this.router.navigate(['/customers']);
     } else {
-      this.error = 'Invalid username or password';
+      this.error = ERROR_MESSAGES.INVALID_CREDENTIALS;
     }
   }
 }

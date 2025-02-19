@@ -5,6 +5,7 @@ import { LoginComponent } from './app/login/login.component';
 import { CustomerListComponent } from './app/customer/customer-list.component';
 import { WelcomeComponent } from './app/welcome/welcome.component';
 import { AuthGuard } from './app/auth.guard';
+import { ROUTES } from './app/constants/app.constants';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +18,10 @@ export class App {}
 bootstrapApplication(App, {
   providers: [
     provideRouter([
-      { path: '', redirectTo: '/login', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent },
-      { path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard] },
-      { path: 'customers', component: CustomerListComponent, canActivate: [AuthGuard] }
+      { path: ROUTES.ROOT, redirectTo: ROUTES.LOGIN, pathMatch: 'full' },
+      { path: ROUTES.LOGIN.slice(1), component: LoginComponent },
+      { path: ROUTES.WELCOME.slice(1), component: WelcomeComponent, canActivate: [AuthGuard] },
+      { path: ROUTES.CUSTOMERS.slice(1), component: CustomerListComponent, canActivate: [AuthGuard] }
     ])
   ]
 });

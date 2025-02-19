@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AUTH_CONSTANTS, ROUTES } from './constants/app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -8,22 +9,20 @@ export class AuthService {
   constructor(private router: Router) {}
 
   login(username: string, password: string): boolean {
-    // This is a mock authentication
-    // In a real application, you would make an API call here
-    if (username === 'admin' && password === 'password') {
-      localStorage.setItem('isLoggedIn', 'true');
-      this.router.navigate(['/customers']);
+    if (username === AUTH_CONSTANTS.DEFAULT_USERNAME && password === AUTH_CONSTANTS.DEFAULT_PASSWORD) {
+      localStorage.setItem(AUTH_CONSTANTS.STORAGE_KEY, AUTH_CONSTANTS.STORAGE_VALUE);
+      this.router.navigate([ROUTES.CUSTOMERS]);
       return true;
     }
     return false;
   }
 
   logout(): void {
-    localStorage.removeItem('isLoggedIn');
-    this.router.navigate(['/login']);
+    localStorage.removeItem(AUTH_CONSTANTS.STORAGE_KEY);
+    this.router.navigate([ROUTES.LOGIN]);
   }
 
   isLoggedIn(): boolean {
-    return localStorage.getItem('isLoggedIn') === 'true';
+    return localStorage.getItem(AUTH_CONSTANTS.STORAGE_KEY) === AUTH_CONSTANTS.STORAGE_VALUE;
   }
 }

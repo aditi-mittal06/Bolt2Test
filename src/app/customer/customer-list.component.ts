@@ -5,6 +5,7 @@ import { CustomerModalComponent } from './customer-modal.component';
 import { Customer } from '../models/customer.model';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { CUSTOMER_CONSTANTS, ERROR_MESSAGES } from '../constants/app.constants';
 
 @Component({
   selector: 'app-customer-list',
@@ -118,7 +119,7 @@ export class CustomerListComponent implements OnInit {
     lastName: '',
     email: '',
     phoneNumber: '',
-    gender: 'Male'
+    gender: CUSTOMER_CONSTANTS.GENDER.MALE
   };
 
   constructor(
@@ -142,7 +143,7 @@ export class CustomerListComponent implements OnInit {
       lastName: '',
       email: '',
       phoneNumber: '',
-      gender: 'Male'
+      gender: CUSTOMER_CONSTANTS.GENDER.MALE
     };
     this.showModal = true;
   }
@@ -153,7 +154,7 @@ export class CustomerListComponent implements OnInit {
   }
 
   deleteCustomer(id: string) {
-    if (confirm('Are you sure you want to delete this customer?')) {
+    if (confirm(ERROR_MESSAGES.DELETE_CONFIRMATION)) {
       this.customerService.deleteCustomer(id);
       this.loadCustomers();
     }

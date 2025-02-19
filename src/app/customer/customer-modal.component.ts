@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Customer } from '../models/customer.model';
+import { CUSTOMER_CONSTANTS, ERROR_MESSAGES } from '../constants/app.constants';
 
 @Component({
   selector: 'app-customer-modal',
@@ -20,12 +21,12 @@ import { Customer } from '../models/customer.model';
               name="firstName"
               [(ngModel)]="customer.firstName"
               required
-              maxlength="100"
+              [maxlength]="CUSTOMER_CONSTANTS.VALIDATION.MAX_NAME_LENGTH"
               class="form-control"
               #firstName="ngModel"
             />
             <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="error">
-              First Name is required and must be less than 100 characters
+              {{ ERROR_MESSAGES.NAME_VALIDATION }}
             </div>
           </div>
 
@@ -37,12 +38,12 @@ import { Customer } from '../models/customer.model';
               name="lastName"
               [(ngModel)]="customer.lastName"
               required
-              maxlength="100"
+              [maxlength]="CUSTOMER_CONSTANTS.VALIDATION.MAX_NAME_LENGTH"
               class="form-control"
               #lastName="ngModel"
             />
             <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="error">
-              Last Name is required and must be less than 100 characters
+              {{ ERROR_MESSAGES.LAST_NAME_VALIDATION }}
             </div>
           </div>
 
@@ -54,13 +55,13 @@ import { Customer } from '../models/customer.model';
               name="email"
               [(ngModel)]="customer.email"
               required
-              maxlength="100"
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              [maxlength]="CUSTOMER_CONSTANTS.VALIDATION.MAX_NAME_LENGTH"
+              [pattern]="CUSTOMER_CONSTANTS.VALIDATION.EMAIL_PATTERN"
               class="form-control"
               #email="ngModel"
             />
             <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-              Please enter a valid email address
+              {{ ERROR_MESSAGES.EMAIL_VALIDATION }}
             </div>
           </div>
 
@@ -77,7 +78,7 @@ import { Customer } from '../models/customer.model';
               #phone="ngModel"
             />
             <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="error">
-              Please enter a valid 10-digit phone number
+              {{ ERROR_MESSAGES.PHONE_VALIDATION }}
             </div>
           </div>
 
@@ -88,21 +89,21 @@ import { Customer } from '../models/customer.model';
                 <input
                   type="radio"
                   name="gender"
-                  value="Male"
+                  [value]="CUSTOMER_CONSTANTS.GENDER.MALE"
                   [(ngModel)]="customer.gender"
                   required
                 />
-                Male
+                {{ CUSTOMER_CONSTANTS.GENDER.MALE }}
               </label>
               <label>
                 <input
                   type="radio"
                   name="gender"
-                  value="Female"
+                  [value]="CUSTOMER_CONSTANTS.GENDER.FEMALE"
                   [(ngModel)]="customer.gender"
                   required
                 />
-                Female
+                {{ CUSTOMER_CONSTANTS.GENDER.FEMALE }}
               </label>
             </div>
           </div>
@@ -179,11 +180,14 @@ export class CustomerModalComponent {
     lastName: '',
     email: '',
     phoneNumber: '',
-    gender: 'Male'
+    gender: CUSTOMER_CONSTANTS.GENDER.MALE
   };
 
   @Output() save = new EventEmitter<Customer>();
   @Output() close = new EventEmitter<void>();
+
+  CUSTOMER_CONSTANTS = CUSTOMER_CONSTANTS;
+  ERROR_MESSAGES = ERROR_MESSAGES;
 
   onSubmit() {
     this.save.emit(this.customer);
